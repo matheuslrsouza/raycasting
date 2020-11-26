@@ -3,25 +3,25 @@ class Particle {
   constructor(pos) {
     this.pos = pos
     this.rays = []
-    for (let i = 0; i < 360; i+=2) {
+    for (let i = 0; i < 360; i+=1) {
       let rad = radians(i)
       this.rays.push(new Ray(pos, createVector(cos(rad), sin(rad))))
     }
   }
 
   show() {
-    //circle(this.pos.x, this.pos.y, 10)
-    let newX = this.pos.x
-    let newY = this.pos.y
+    push()
 
-    circle(newX, newY, 10)
-    this.pos = createVector(newX, newY)
+    translate(this.pos.x, this.pos.y)
+    circle(0, 0, 30)
+
+    pop()
+    
     for (ray of this.rays) {
-      ray.pos.x = newX
-      ray.pos.y = newY
+      ray.pos.x = this.pos.x
+      ray.pos.y = this.pos.y
       ray.show()
     }
-
   }
 
   update(x, y) {
@@ -45,7 +45,6 @@ class Particle {
       if (closest) {
         stroke(255, 100)
         line(this.pos.x, this.pos.y, closest.x, closest.y)
-        //ellipse(closest.x, closest.y, 10)
       }
     }
   }
